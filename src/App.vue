@@ -15,6 +15,9 @@
   <h2>Count: {{ state.context.count.toFixed(2) }}</h2>
   <div>
     <button @click="send('TOGGLE')">{{ toggleButtonLabel }}</button>
+    <button @click="send('RESET')" :disabled="state.matches('inactive')">
+      Reset
+    </button>
   </div>
   <h3>Current State: {{ state.value }}</h3>
 
