@@ -12,22 +12,32 @@
     </button>
   </div>
 
-  <h2>Count: {{ state.context.count }}</h2>
+  <h2>Count: {{ state.context.count.toFixed(2) }}</h2>
   <div>
     <button @click="send('TOGGLE')">{{ toggleButtonLabel }}</button>
   </div>
-  <h3>Current State: Active/Inactive</h3>
+  <h3>Current State: {{ state.value }}</h3>
+
+  <div>
+    <h3>Increment step: {{ incVal }}</h3>
+    <input
+      v-model.number="incVal"
+      :disabled="state.matches('inactive')"
+      type="number"
+    />
+  </div>
 </template>
 
 <script>
+import { computed, ref, watchEffect } from "@vue/runtime-core";
 import { useMachine } from "@xstate/vue";
 import counterMachine from "./counterMachine";
-import { computed } from "@vue/runtime-core";
 
 export default {
   name: "App",
   components: {},
   setup() {
+    const incVal = ref(1);
     const { state, send } = useMachine(counterMachine);
 
     const toggleButtonLabel = computed(() => {
@@ -39,10 +49,18 @@ export default {
       }
     });
 
+    watchEffect(() => {
+      send({
+        type: "UPDATE_INC_VAL",
+        incVal: incVal.value || 0,
+      });
+    });
+
     return {
       state,
       send,
       toggleButtonLabel,
+      incVal,
     };
   },
 };
