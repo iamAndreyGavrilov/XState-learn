@@ -13,9 +13,19 @@
 </template>
 
 <script>
+import { useMachine } from "@xstate/vue";
+import counterMachine from "./counterMachine";
+
 export default {
   name: "App",
   components: {},
+  setup() {
+    const { state, send } = useMachine(counterMachine);
+    return {
+      state,
+      send,
+    };
+  },
 };
 </script>
 
