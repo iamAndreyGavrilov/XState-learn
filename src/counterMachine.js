@@ -14,8 +14,8 @@ const updateIncVal = assign({
 
 //incVal не сбрасывается (надо разобраться ref(1) и тд)
 const resetAll = assign({
-  count: 0,
-  incVal: 1,
+  count: (ctx) => (ctx.count = 0),
+  // incVal: (ctx) => (ctx.incVal = 1),
 });
 
 const counterMachine =
