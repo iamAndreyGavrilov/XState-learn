@@ -22,9 +22,9 @@
   <h3>Current State: {{ state.value }}</h3>
 
   <div>
-    <h3>Increment step: {{ incVal }}</h3>
+    <h3>Increment step: {{ state.context.incVal }}</h3>
     <input
-      v-model.number="incVal"
+      v-model.number="state.context.incVal"
       :disabled="state.matches('inactive')"
       type="number"
     />
